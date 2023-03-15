@@ -1,0 +1,17 @@
+{
+  "name": "markdownblog-server",
+  "version": "1.0.0",
+  "description": "tutorial for learning express and react",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js"
+  },
+  "author": "Teo Medesi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
