@@ -3,12 +3,14 @@
   "version": "1.0.0",
   "description": "tutorial for learning express and react",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "server": "nodemon server.js"
   },
   "author": "Teo Medesi",
   "license": "MIT",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2"
   },
   "devDependencies": {
