@@ -1,18 +1,42 @@
-const Article = ({title, date, description}) => {
-  return (
-    <article className="rounded border-gray-400 p-6 lg:p-12 w-full lg:w-2/3 xl:w-1/2 gap-8 flex flex-col border">
-        <div className="flex flex-col gap-2">
-            <h1 className="text-3xl">{title}</h1>
-            <h3 className="text-lg text-gray-400">{date}</h3>
-            <p className="text-gray-700 w-full">{description}</p>
-        </div>
-        <div className="flex flex-row gap-2">
-            <button className="p-2 px-4 rounded-md text-white bg-blue-800">Read More</button>
-            <button className="p-2 px-4 rounded-md text-white bg-blue-400">Edit</button>
-            <button className="p-2 px-4 rounded-md text-white bg-red-600">Delete</button>
-        </div>
-    </article>
-  )
-}
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 
-export default Article
+const Article = () => {
+  const { id } = useParams();
+  const [article, setArticle] = useState({});
+
+  const fetchArticle = async () => {
+    fetch(`/api/articles/${id}`).then((response) => {
+      response.json().then((data) => {
+        setArticle(data.article);
+      });
+    });
+  };
+
+  useEffect(() => {
+    fetchArticle();
+  }, []);
+
+  return (
+    <article className="p-6 lg:p-12 w-full gap-4 flex flex-col">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-5xl">{article.title}</h1>
+        <h3 className="text-lg text-gray-400">{article.createdAt}</h3>
+      </div>
+
+      <div className="flex flex-row gap-2">
+        <Link to="/" className="p-2 px-4 rounded-md text-white bg-gray-500">
+          All Articles
+        </Link>
+        <button className="p-2 px-4 rounded-md text-white bg-blue-500">
+          Edit
+        </button>
+      </div>
+      <div>
+        <p className="text-gray-700 w-full">{article.markdown}</p>
+      </div>
+    </article>
+  );
+};
+
+export default Article;

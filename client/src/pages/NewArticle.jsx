@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const NewArticle = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [markdown, setMarkdown] = useState("");
 
+    const navigate = useNavigate();
+
 
     const submitForm = event => {
         event.preventDefault();
-        console.log("submit")
+
         // sending a POST request to our server, creating a new article
         fetch("/api", {
             method: "POST",
@@ -22,8 +24,14 @@ const NewArticle = () => {
                 markdown: markdown
             }),
             type: "cors"   
-            
+        }).then(response => {
+            if (response.status === 201) {
+                response.json().then(data => {
+                    navigate(`/articles/${data.article.slug}`);
+                })
+            }
         })
+        
     }
 
   return (
