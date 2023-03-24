@@ -23,14 +23,15 @@ const articleSchema = new mongoose.Schema({
         unique: true
     }
 })
-articleSchema.pre("validate", () => {
-   if (this.title) 
-   {
-        this.slug = slugify(this.title, {
-            lower: true, 
-            strict: true
-        });
-   } 
+
+articleSchema.pre("validate", function() {
+    if (this.title != null) 
+    {
+         this.slug = slugify(this.title, {
+             lower: true, 
+             strict: true
+         });
+    }
 });
 
 export default mongoose.model("Article", articleSchema)

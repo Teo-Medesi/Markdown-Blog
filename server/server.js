@@ -83,6 +83,23 @@ app.delete("/articles/:id", async (req, res) => {
   }
 })
 
+app.put("/articles/:id", async (req, res) => {
+  try {
+    // first we need to get the article document we want to edit, make changes and then run save()
+    await Article.findOneAndUpdate({slug: req.params.id}, {
+      title: req.body.title,
+      description: req.body.description,
+      markdown: req.body.markdown
+    });
+
+    res.status(200).json({message: "successfully created"});
+  }
+  catch (error) {
+    console.error(error);
+    res.status(404).json({message: "resource not found", error: error});
+  }
+});
+
 app.listen(5000, () => {
   console.log("Started server on port 5000...");
 });
